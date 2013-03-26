@@ -7,22 +7,22 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Address {
 
 	@Id
-	private Long _id;
+	private String _id;
 
 	private String name;
 	private String address;
 	private String phone;
 	private String email;
 
-	public Long get_id() {
-		return _id;
-	}
+    public String get_id() {
+        return _id;
+    }
 
-	public void set_id(Long _id) {
-		this._id = _id;
-	}
+    public void set_id(String _id) {
+        this._id = _id;
+    }
 
-	public String getName() {
+    public String getName() {
 		return name;
 	}
 

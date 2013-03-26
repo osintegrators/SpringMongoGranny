@@ -119,8 +119,7 @@ var app = {
      //populate the list box
     getAllAddresses: function () {
         $.getJSON("addresses", function(data){
-             data = data.data;
-            
+
             var entries = [];
             entries.push("<option value='' />");
             $.each(data, function(){
@@ -137,8 +136,8 @@ var app = {
         var address = app.makeAddress();
         if(address._id === "" || address._id.length <1) { app.createAddress(address); return;}
         $.ajax({
-            url:"address",
-            type:"post",
+            url:"update",
+            type:"put",
             contentType:"application/json",
             processData: false,
             data: JSON.stringify(address),
@@ -179,7 +178,7 @@ var app = {
              $.ajax({
                  url:"get/"+id,
                  type:"get",
-                 success: function(data) { app.populateFields(data.data); }
+                 success: function(data) { app.populateFields(data); }
              });
         }
         else{
@@ -195,22 +194,22 @@ var app = {
         $("#emailField").attr("value", addressJSON.email);
         $("#selectedIndexField").val(addressJSON._id || "");
     },
-    
-    deleteAddress: function(){
+
+    deleteAddress: function (){
         var address = app.makeAddress();
-        var currentName = $("#nameField").attr("value");
-        $.ajax({
-            url:"address/name/"+currentName,
-            type:"delete",
-            data: JSON.stringify(address),
-            success: function() {
-                app.getAllAddresses();
-                app.populateFields(app.emptyUser);
+        var id = address._id;
+        if(id){
+             $.ajax({
+                 url:"delete/"+ id,
+                 type:"delete",
+                 success: function() { app.getAllAddresses();
+                                       app.populateFields(app.emptyUser) }
+             });
+        }
+        else{
+             app.populateFields(app.emptyUser);
             }
-        });
-    }
-
-
+        },
 };
 
 //after the page loads

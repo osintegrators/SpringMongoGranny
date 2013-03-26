@@ -6,15 +6,15 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans			http://www.springframework.org/schema/beans/spring-beans.xsd
                         http://www.springframework.org/schema/context		http://www.springframework.org/schema/context/spring-context-3.0.xsd
                         http://www.springframework.org/schema/data/mongo    http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd
-                        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+                        http://www.springframework.org/schema/util          http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-	<context:component-scan base-package="com.osintegrators.example" />
+
+    <context:component-scan base-package="com.osintegrators.example" />
 
     <!-- Host and port for the mongod instance (default values of MongoDB here) -->
     <mongo:mongo host="localhost" port="27017" />
 
     <mongo:db-factory dbname="mongo_granny" mongo-ref="mongo" />
-
 
     <!-- MongoTemplate must have a mongod instance as a const arg and the database
         name. ( The database need not exist ) The write Concern property takes into
@@ -36,6 +36,6 @@
         for the converter is 'mappingConverter' -->
     <mongo:mapping-converter base-package="com.osintegrators.example" />
 
-    <mongo:repositories base-package="com.osintegrators.example.AddressRepository" />
+    <mongo:repositories base-package="com.osintegrators.example" />
 
 </beans>

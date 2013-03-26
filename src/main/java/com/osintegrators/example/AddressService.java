@@ -8,11 +8,11 @@ public interface AddressService {
 
 	void createAddress(Address add);
 
-	void deleteAddress(Address add);
+	void deleteAddress(String id);
 
 	List<Address> getAllAddresses();
 
-	Address getAddressById(Long id);
+	Address getAddressById(String id);
 
 	void updateAddress(Address address);
 

@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
@@ -20,57 +22,60 @@ import java.util.Locale;
 @Controller
 public class HomeController {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(HomeController.class);
+    private static final Logger logger = LoggerFactory
+            .getLogger(HomeController.class);
 
-	@Autowired
-	AddressService addressService;
+    @Autowired
+    AddressService addressService;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		logger.debug("in home method");
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String home(Locale locale, Model model) {
+        logger.debug("in home method");
 
-		addModelElements(model);
-		return "home";
-	}
-	
+        return "home";
+    }
 
-	/*@RequestMapping(value = "/get", method = RequestMethod.GET)
-	public String get(Model model, @RequestParam String oldName, @RequestParam String selectedIndex) {
-	        logger.debug("in get method");
-	        Address address = addressService.getAddressByName(oldName);
-	                
-	        model.addAttribute("selectedIndex",selectedIndex);
-	        model.addAttribute("address", address);
-	        addModelElements(model);
-	        return "home";
-	}*/
-	
-	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	@ResponseStatus(HttpStatus.CREATED)
-	public void create(@RequestBody Address address) {
-	        logger.debug("in create method");
 
-		addressService.createAddress(address);
+    @RequestMapping(value = "/get/{_id}", method = RequestMethod.GET)
+    public @ResponseBody Address get(@PathVariable String _id) {
+        logger.debug("in get method");
+        return addressService.getAddressById(_id);
+    }
 
-	}
-	
-	/*@RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-	public String delete(Model model, @RequestParam String name) {
-	        logger.debug("in delete method");
-	                
-	        Address add = addressService.getAddressByName(name);
-	        addressService.deleteAddress(add);
-	        addModelElements(model);
-	                
-	        model.addAttribute("status","deleted");
-	                
-	        return "home";
-	}*/
+    @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void create(@RequestBody Address address) {
+        logger.debug("in create method");
 
-	private void addModelElements(Model model) {
-		List<Address> addresses = addressService.getAllAddresses();
-		model.addAttribute("addresses", addresses);
-	}
+        address.set_id(null);
+        addressService.createAddress(address);
+
+    }
+
+
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@RequestBody Address address) {
+        logger.debug("in create method");
+
+        addressService.updateAddress(address);
+
+    }
+
+    @RequestMapping(value = "/delete/{_id}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable String _id) {
+        logger.debug("in delete method");
+
+        addressService.deleteAddress(_id);
+    }
+
+    @RequestMapping(value = "/addresses", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody List<Address> list() {
+        logger.debug("in create method");
+
+        return addressService.getAllAddresses();
+    }
 
 }

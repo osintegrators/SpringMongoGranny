@@ -20,18 +20,28 @@ public class AddressServiceImpl implements AddressService {
 
 	}
 
-	public void deleteAddress(Address address) {
-		addressRepository.delete(address);
+	public void deleteAddress(String id) {
+        Address address = addressRepository.findBy_id(id);
+        if (address != null){
+		    addressRepository.delete(address);
+        }
 	}
 
 	@Override
-	public Address getAddressById(Long id) {
-		return addressRepository.findOne(id);
+	public Address getAddressById(String id) {
+		return addressRepository.findBy_id(id);
 	}
 
 	@Override
 	public void updateAddress(Address address) {
-		addressRepository.save(address);
+
+        Address addressInDB = addressRepository.findBy_id(address.get_id());
+        addressInDB.setName(address.getName());
+        addressInDB.setAddress(address.getAddress());
+        addressInDB.setPhone(address.getPhone());
+        addressInDB.setEmail(address.getEmail());
+
+        addressRepository.save(address);
 
 	}
 

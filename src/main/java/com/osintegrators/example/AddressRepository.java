@@ -11,6 +11,8 @@ public interface AddressRepository extends MongoRepository<Address, Long> {
 
 	List<Address> findAll();
 
+    Address findBy_id(String id);
+
     @Query("{ name : ?0 }")
 	Address findByName(String name);
 

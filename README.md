@@ -30,5 +30,5 @@ Run
 <br> Tomcat
 <br> vFabric tcServer
 9. After you create a server, Deploy the project on the server. 
-10. Note: If your IDE does not have the facility to run on an server from within, you can do a mvn package from the command line and deploy the .war file directly on an external server
+10. Note: If your IDE does not have the facility to run on a server from within, you can do a mvn package from the command line and deploy the .war file directly on an external server
 11. Browse to [server URL](http://localhost:8080/SpringMongoGranny/)

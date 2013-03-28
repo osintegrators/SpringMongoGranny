@@ -20,7 +20,9 @@
         name. ( The database need not exist ) The write Concern property takes into
         account many MongoDB exceptions such as duplicate inserts etc which mite
         not persist to the database possible values are LOG, EXCEPTION, NONE and
-        NORMAL -->
+        NORMAL 
+        This bean is never used. It has been declared here to provide easy config options to 
+        any curious developers who want to try out the MongoTemplate -->
     <bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 
         <constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
